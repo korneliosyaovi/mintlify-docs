@@ -1,0 +1,113 @@
+---
+title: 'Verifying an Order'
+description: 'Confirm the information of a Customer order.'
+icon: 'circle-check'
+---
+
+After the customer pays for an order, you need to ensure that the transaction is actually completed before providing value to them. You should verify the transaction as a failsafe against any discrepancy that can occur during transaction reconciliation.
+
+When verifying the order (transaction), you need to look out for some important information in the payment response:
+
+1. The order reference, `data.orderReference`
+2. The payment's status, `data.status`
+3. The currency, `data.currencyName`
+4. The transaction amount.
+
+To query the final status of the order, send your request containing the order's reference to the verify order [endpoint](/api-reference/orders/verify-order).
+
+<Tip>
+Use your `private-key` to authorize your order verification requests.
+</Tip>
+
+<CodeGroup>
+
+```json Example
+{
+    "reference": "805551685"
+}
+```
+
+```json 200 OK [expandable]
+{
+   "data":{
+      "orderReference":"805551685",
+      "paymentReference":"EPCLB-3134A6BDF47211EF93AB06BA2661E92B",
+      "productName":"Collection",
+      "totalAmountCharged":106.0000,
+      "statusId":4,
+      "status":"Failed",
+      "paymentMethod":"Card Payment",
+      "paymentResponseCode":"12",
+      "paymentResponseMessage":"Transaction failed: Card transaction blocked due to change in the credit card details from the registered one",
+      "narration":"Pay",
+      "remarks":"Order initiated and created successfully",
+      "currencyId":6,
+      "paymentLinkId":null,
+      "paymentLinkReference":null,
+      "recurringPaymentId":null,
+      "recurringPaymentReference":null,
+      "currencyName":"USD",
+      "fee":6.0000,
+      "feeRate":6.0000,
+      "subsidiaryFee":0.0000,
+      "customerFee":6.0000,
+      "dateCreated":"2025-02-26T18:47:56",
+      "dateUpdated":"2025-02-26T19:05:35.717496",
+      "datePaymentConfirmed":null,
+      "orderPayments":[
+         {
+            "orderId":29,
+            "orderPaymentReference":"PGW-PAYREF-3B315861F627474FA83852DBDD6CE71A",
+            "paymentOptionId":2,
+            "paymentOption":"Card Payment",
+            "statusId":4,
+            "status":"Failed",
+            "responseCode":"12",
+            "responseMessage":"Transaction failed: Card transaction blocked due to change in the credit card details from the registered one",
+            "orderPaymentInstrument":null,
+            "remarks":"Order payment initiated",
+            "dateCreated":"2025-02-26T19:05:21.723112",
+            "dateUpdated":"2025-02-26T19:05:35.717595"
+         }
+      ],
+      "customer":{
+         "customerId":null,
+         "firstName":null,
+         "lastName":null,
+         "emailAddress":null,
+         "countryShortName":null,
+         "customerGroup":null,
+         "countryId":0,
+         "globalStatusId":0,
+         "globalStatus":null,
+         "mobileNumber":null,
+         "isBlacklisted":false,
+         "reasonBlacklisted":null,
+         "dateCreated":"0001-01-01T00:00:00",
+         "dateUpdated":null
+      },
+      "cardDetails":[
+         {
+            "orderPaymentId":19,
+            "status":true,
+            "country":null,
+            "cardToken":null,
+            "cardExpiryMonth":null,
+            "cardExpiryYear":null,
+            "cardType":null,
+            "cardIssuer":null,
+            "cardFirstSixDigits":null,
+            "cardLastFourDigits":null,
+            "dateCreated":"2025-02-26T19:05:35.729312",
+            "appEnvironmentId":1
+         }
+      ],
+      "paymentLink":null
+   },
+   "status":"success",
+   "statusCode":"00",
+   "message":"Order details fetched successfully"
+}
+```
+
+</CodeGroup>

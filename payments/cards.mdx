@@ -1,0 +1,191 @@
+---
+title: 'Card Payments'
+description: 'Collect card payments.'
+icon: 'credit-card'
+---
+
+Collect local and international card payments from your customers using our integration. Ulipa API helps you to accept payment from Mastercard, Visa, AMEX and JCB cards.
+
+<Info>
+Our APIs only support online payments for single and recurring payments. We do not support contactless payments (NFC technology) or POS transactions.
+</Info>
+
+## Payment flow
+Several steps occur between entering your card details online and seeing the charge on your account. Before we cover the steps involved in the charge, let's review some terminology:
+
+1. Cardholder: This refers to the customer making the payment with their card.
+2. Authorization model (Auth Models): Defines how a customer approves a card payment.
+
+<Info>
+We'll proceed assuming you've already set up a customer order. If you need to create one, you'll find the steps [here](/orders/create-orders).
+</Info>
+
+## Single Card Payments
+In this section, we'll cover the basics of making one-time card payments. This is great for checkout experiences and other one-time payment use cases. After creating the order, you need to follow these steps to complete the card payment.
+
+1. [Collect](#collecting-the-customer’s-card-information) the customer's card information.
+2. [Encrypt](/api-basics/encryption) sensitive data within your request.
+3. Guide the customer through the payment authorization process using the required method.
+4. Confirm the payment and inform the customer of its outcome.
+
+### Collecting the Customer's Card Information
+Present the customer with a secure form to gather their card details. These details are crucial for initiating the transaction and consist of:
+
+| Customer information              | Parameter                | Example            | Required |
+| :-------------------------------- | :----------------------- | :----------------- | :------- |
+| Card number                       | `card.cardnumber`        | 5555555555554444   | Yes      |
+| Card expiry month                 | `card.expirymonth`       | 12                 | Yes      |
+| Card expiry year                  | `card.expiryyear`        | 27                 | Yes      |
+| Card security code (CVV / CVC)    | `card.cvv`               | 123                | Yes      |
+| Street address                    | `billingAddress.street`  | 58 Blatchington Rd | Yes      |
+| City                              | `billingAddress.city`    | Hove               | Yes      |
+| State                             | `billingAddress.state`   | East Sussex        | Yes      |
+| Country                           | `billingAddress.country` | GB                 | Yes      |
+| Zip code                          | `billingAddress.zipCode` | BN3 3YH            | Yes      |
+
+
+Combine the card data, order reference, `paymentoption`, and the customer's country. Encrypt the request before sending it to the pay order endpoint.
+<CodeGroup>
+
+```json Example (Unencrypted)
+{
+    "reference": "12345678",
+    "paymentoption": "C",
+    "country": "GB",
+    "card": {
+        "cardnumber": "5555555555554444",
+        "expirymonth": "12",
+        "expiryyear": "27",
+        "cvv": "123",
+       "billingAddress": {
+            "street": "58 Blatchington Rd",
+            "city": "Hove",
+            "country": "GB",
+            "state": "East Sussex",
+            "zipCode": "BN3 3YH"
+        }
+    }
+}
+```
+
+```json Example (Encrypted)
+{
+  "data": "B9pQJ1HoxybgfjNnEro+26w7lQZ6jriF3AFiUeGH2Ggacn6cF0srUlqiHEXeEncJcMw6ThDobjuS+AsmvhNfvGPGMddjbt5rcK2JrUnUI4cHk0XebJKoNnjEqivcyq0UKEMdYOLd6mYZtvKu5FMlpz0Lo0aMY49pnYvUGLSsCf/wOhlPx9PHgQDXptT+WBJcO3lzeD8O0S4IVSWPCWPLi7GhGlqhZpheEi1FHq39TCHk12hL3sqkkIktZIkkQVAe8AkwZGhy/CMJZrTzU6IXZr2ulT7mJenZljSk66m0pARcUqwMw/+5PEPECDo8SX3IkX2hmym02pGuWZeHE9ONWcaW7h8UIroQ/+kThz/RtP/UMiK3596cij66JcW+RcXKPiqNKysskcnaOlQFIFuhEiAczimLgd320RrQzehaw1C33UGsCzAG1p2EnDthjTF63BZtEhVlu9kN7qtFCz9AvojZeaZFKOxpJJ0usfwl9Hq5oAa56AFt/3IIsvqrAktTOyMgQ/jGQ6uhRYpA6UAH0CcYyv7L99hgVtRTXAxA/rpCtY7aTR9Pjxb5Lt1IV0Q1V8fWxAv0yY+ss07qeiSIsccsdJiN4LaMx3RvmDlu54XF68w51L34hOCDj/NBoPVUZrSaCJK2GPJ6CjOHI8q2/U2TkU+y+a80XCAC/rgqGhw="
+}
+```
+
+</CodeGroup>
+
+Upon receiving your request, we will return a successful response containing the authorization instructions for the customer to complete payment.
+
+```json 200 OK [expandable]
+{
+  "data": {
+    "paymentDetail": {
+      "redirectUrl": "https://core-api-service.ideospay.dev/web/card/authorize/CPF046D30F-3F82-4A9A-B2AD-AC5AE3480D8F/initiate",
+      "recipientAccount": null,
+      "paymentReference": "CPF046D30F-3F82-4A9A-B2AD-AC5AE3480D8F"
+    },
+    "bankTransferDetails": null,
+    "orderPayment": {
+      "orderId": 26,
+      "orderPaymentReference": "PGW-PAYREF-96C2ABCB218C43329037E47268F74195",
+      "currency": "NGN",
+      "statusId": 2,
+      "orderPaymentResponseCode": "02",
+      "orderPaymentResponseMessage": "pending-authenticaion",
+      "orderPaymentInstrument": null,
+      "remarks": "Order payment initiated",
+      "totalAmount": 114,
+      "fee": 14
+    }
+  },
+  "status": "success",
+  "statusCode": "02",
+  "message": "Card order created successfully"
+}
+```
+
+## Authorization models
+
+Cardholder authorization is required to finalize the payment. While various methods exist, Ulipa offers two distinct authorization models:
+
+1. Challenged flow or `3DS`
+2. Non-challenged authorization or `noauth`
+
+
+### Challenged flow / 3DS
+
+With this model, the customer is securely redirected to their bank's authorization page. The bank will request varying information, such as a soft token, one-time password, or address. In some cases, a passphrase may be required.
+
+Open the `paymentDetail.redirectUrl` to send the customer to their bank's page for payment authorization.
+
+If the payment is authorized successfully, Ulipa gets notified of the successful payment, and you receive a webhook containing the transaction details. For failed payments, you will receive a separate webhook with the final payment status.
+
+
+
+### Non-challenged flow / NoAuth
+
+2DS or Noauth payments are unchallenged card transactions, i.e. the customer is not required to authorize the charge to complete them.
+
+To charge a customer using 2DS, add the `authOption`flag in your payment method [request]() and set it to`noauth`
+
+<CodeGroup>
+
+```json Example (Unencrypted) {10}
+{
+    "reference": "193246191",
+    "paymentoption": "C",
+    "country": "GB",
+    "card": {
+        "cardnumber": "5555555555554444",
+        "expirymonth": "12",
+        "expiryyear": "27",
+        "cvv": "123",
+        "authOption": "NOAUTH",
+       "billingAddress": {
+            "street": "58 Blatchington Rd",
+            "city": "Hove",
+            "country": "GB",
+            "state": "East Sussex",
+            "zipCode": "BN3 3YH"
+        }
+    }
+}
+```
+
+```json Example (Encrypted)
+{
+  "data": "B9pQJ1HoxybgfjNnEro+26w7lQZ6jriF3AFiUeGH2Ggacn6cF0srUlqiHEXeEncJcMw6ThDobjuS+AsmvhNfvGPGMddjbt5rcK2JrUnUI4cHk0XebJKoNnjEqivcyq0UKEMdYOLd6mYZtvKu5FMlpz0Lo0aMY49pnYvUGLSsCf/wOhlPx9PHgQDXptT+WBJcO3lzeD8O0S4IVSWPCWPLi7GhGlqhZpheEi1FHq39TCHk12hL3sqkkIktZIkkQVAe8AkwZGhy/CMJZrTzU6IXZr2ulT7mJenZljSk66m0pARcUqwMw/+5PEPECDo8SX3IkX2hmym02pGuWZeHE9ONWcaW7h8UIroQ/+kThz/RtP/UMiK3596cij66JcW+RcXKPiqNKysskcnaOlQFIFuhEiAczimLgd320RrQzehaw1C33UGsCzAG1p2EnDthjTF63BZtEhVlu9kN7qtFCz9AvojZeaZFKOxpJJ0usfwl9Hq5oAa56AFt/3IIsvqrAktTOyMgQ/jGQ6uhRYpA6UAH0CcYyv7L99hgVtRTXAxA/rpCtY7aTR9Pjxb5Lt1IV0Q1V8fWxAv0yY+ss07qeiSIsccsdJiN4LaMx3RvmDlu54XF68w51L34hOCDj/NBoPVUZrSaCJK2GPJ6CjOHI8q2/U2TkU+y+a80XCAC/rgqGhw="
+}
+```
+
+```json 200 OK
+{
+    "data": {
+        "paymentDetail": {
+            "redirectUrl": null,
+            "recipientAccount": null,
+            "paymentReference": "CP73C65657-6E07-48DB-9D0B-722BABCAB8ED"
+        },
+        "bankTransferDetails": null,
+        "orderPayment": {
+            "orderId": 38,
+            "orderPaymentReference": "PGW-PAYREF-CEF850B7CAFD4D24B054DC75BEA763BB",
+            "currency": "NGN",
+            "statusId": 2,
+            "orderPaymentResponseCode": "00",
+            "orderPaymentResponseMessage": "Transaction was completed successfully",
+            "orderPaymentInstrument": null,
+            "remarks": "Order payment initiated",
+            "totalAmount": 212.00,
+            "fee": 12.00
+        }
+    },
+    "status": "success",
+    "statusCode": "00",
+    "message": "Transaction was completed successfully"
+}
+```
+
+</CodeGroup>

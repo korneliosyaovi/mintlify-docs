@@ -1,0 +1,46 @@
+---
+title: 'Querying your Order Fees'
+description: 'Retrieve transaction fees for your payments.'
+icon: 'magnifying-glass-dollar'
+---
+
+Transaction fees vary depending on the selected payment method. Before initiating a payment, use our [fees API](/api-reference/orders/fee) to query and present the customer with an accurate fee breakdown.
+
+Follow these instructions to query fees before initiating a payment:
+
+1. Encrypt the fee query request. This request should contain the payment type and transaction amount.
+2. Send the encrypted request to the fetch fee endpoint.
+
+Use these examples to guide your fee query.
+
+<CodeGroup>
+
+```json Example (Unencrypted)
+{
+    "amount": 500,
+    "payment_option": "CARD"
+}
+```
+
+```json Example (Encrypted)
+{
+    "data": "b6t36QfBWy0r7SQipdgkzp1+5O43QyYYjrj8FNIAKfx7gR9AtITHEDDA02m3oLqFNwsButeKkyZVL8+21kz9sY1yfJuI/QqtefxGPUagYCnuMNIBFeo97rWCemI8oBQ5G33NgnPoX54MWw7aZ8/W8wLWtrAeFA1WjwsIh3Ewb7z07Q/IgqCXn6793xizC9qIp/X5HCzdnBgUcUk92Xo7qKPbsR/8Cvmg6zapU9Z8zsdYwxUx/lkQLAihvarQ7LmGL4tyijKu2FcNQL7xdJKArl1hfv4d80FkD/0tnbxl6w/taL2rCgvALiNvgerxJQi8PgMACG4lMzib+LVhNzcu94fmUNiG7kwUfbB7QmlUmqgGoyMwOqSGGbKDkNcyQQuVPbaW6znfIGIqp3sVFBLnMD9vCWdlIqmNTskp2ROBL4DVAzNmJwAj9ofhXcSN5RF1Bx0ubAzQ4N90z6xduwZHH/iV/rqTfsIdXkRDVZWP25cJB8huoTTJcBBnoX9bFnj1709fAGQuMyNlj+uBqXKwFA6Q9MrafefNnRzU6OpeNzibNpL3hOHfoZkuA8Zqjc14Rq1BuIMYuLrsfpdZTW2vSnNWUju5B+DU9sat5Sbxks6QqIyrH3HhzJQeCaD59ruFDTyAG/kSz37y18BTt3iybg0z+nW1zXWfJec46hSCDpQ="
+}
+```
+
+```json 200 OK
+{
+    "data": {
+        "fee": 80.00,
+        "amount": 500.0,
+        "subsidiary_fee": 80.00,
+        "customer_fee": 0.0000000,
+        "total_charged_amount": 500.0000000,
+        "payment_option": "CARD"
+    },
+    "status": "success",
+    "message": "Operation successful"
+}
+```
+
+</CodeGroup>

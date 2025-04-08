@@ -1,0 +1,42 @@
+---
+title: 'API Errors'
+description: 'Understand error codes and how to handle them.'
+---
+
+Our APIs use standard HTTP status codes to indicate the outcome of your requests. For more detailed information, error responses are returned in JSON format, containing specific error codes and messages.
+
+| HTTP status code   | Error message                               | Possible cause                                                       |
+| :----------------- | :------------------------------------------ | :------------------------------------------------------------------- |
+| `400 Bad request`  | The `PARAM_NAME` field is required.         | The request is missing the parameter returned in the error response. |
+| `400 Bad request`  | `PARAM_NAME` is currently not supported.    | The value provided for the specified parameter is not supported.     |
+| `401 Unauthorized` | `api-key` was not passed in the header.     | The API key for authorizing the request is missing or invalid.       |
+| `404 not found`    | `PARAM_NAME` not found at the moment.       | The order or payment being queried does not exist.                   |
+
+
+
+## Error Structure
+
+When an error occurs, you receive a JSON object with the following structure:
+
+```json Example
+{
+    "status": "failed",
+    "status_code": "100",
+    "message": "Customer country is currently not supported"
+}
+```
+
+The response contains:
+
+* a `failed` status indicating that the API request was not processed successfully.
+* The error `status_code` .
+* The error message detailing what is wrong with the request.
+
+
+
+## Best Practices
+
+1. Log all API errors for easy debugging and issue resolution with the support team.
+2. Present your customers with actionable user-friendly messages so they are not stuck when they make an error.
+3. Implement retry logic for transient errors like 5xx errors or rate limiting.
+4. Report persistent or unexpected errors to our support team.
