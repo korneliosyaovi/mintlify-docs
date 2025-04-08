@@ -1,0 +1,248 @@
+---
+title: 'Data encryption'
+description: 'Encrypt user data and payment requests.'
+icon: 'lock'
+---
+
+When initiating or managing your payments and orders, you must encrypt your data before making the request. If you send an unencrypted request to an endpoint that requires encryption, you will receive a `401` error.
+
+```json 400 Bad Request
+{
+    "status": "failed",
+    "statusCode": "400",
+    "message": "Unable to find the encrypted data, please encrypt your payload and try again"
+}
+```
+
+To encrypt your request payload, you will need to fetch your encryption key from your dashboard (learn more [here](/api-basics/authorization#retrieving-your-api-keys)). Our encryption uses the RSA algorithm to encrypt data, you can read up about RSA encryption [here](https://en.wikipedia.org/wiki/RSA_cryptosystem).
+
+We've included some examples in this guide to help you encrypt your requests.
+
+1. Retrieve your encryption key.
+2. Decode your key using base64.
+3. Split the result into an array with two elememts using "!" as a delimiter.
+4. Extract your RSA public key as array[1] from the array in step 3.
+5. Encrypt using the RSA public key returned in step 4.
+
+<CodeGroup>
+
+```javascript Node.js [expandable]
+const forge = require('node-forge');
+const NodeRSA = require('node-rsa');
+const {DOMParser} = require('xmldom');
+
+function encrypt(message, merchantEncryptionKey) {
+    const encPemKey = getRsaEncryptionKey(merchantEncryptionKey);
+
+    console.log(encPemKey);
+
+    const encryptKey = new NodeRSA(encPemKey);
+    encryptKey.setOptions({
+        encryptionScheme: 'pkcs1'
+    });
+
+
+    const encryptedMessage = encryptKey.encrypt(message, 'base64');
+
+    if (encryptedMessage) {
+        console.log('Encrypted Message:', encryptedMessage);
+    } else {
+        console.error('Encryption failed.');
+    }
+    return encryptedMessage;
+}
+
+function getRsaEncryptionKey(merchantEncryptionKey) {
+    // Decode the Base64 string
+    const decodedKey = Buffer.from(merchantEncryptionKey, 'base64').toString('utf-8').split('!');
+    console.log(decodedKey);
+
+    const rsaXml = decodedKey[1];
+    console.log(rsaXml);
+
+    return xmlToPem(rsaXml);
+}
+
+function xmlToPem(xmlKey) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlKey, 'text/xml');
+
+    // Extract Modulus and Exponent
+    const modulusBase64 = xmlDoc.getElementsByTagName('Modulus')[0].textContent;
+    const exponentBase64 = xmlDoc.getElementsByTagName('Exponent')[0].textContent;
+
+    console.log('modulusBase64:', modulusBase64);
+    console.log('exponentBase64:', exponentBase64);
+
+    const BigInteger = forge.jsbn.BigInteger;
+
+    function parseBigInteger(b64) {
+        return new BigInteger(forge.util.createBuffer(forge.util.decode64(b64)).toHex(), 16);
+    }
+
+    const publicKey = forge.pki.setRsaPublicKey(
+        parseBigInteger(modulusBase64),
+        parseBigInteger(exponentBase64)
+    );
+
+    // Convert a Forge public key to PEM-format
+    const pem = forge.pki.publicKeyToPem(publicKey);
+
+    return pem;
+}
+
+module.exports = encrypt;
+```
+
+```python Python [expandable]
+# include imports
+import base64
+import json
+import os
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_v1_5
+from dotenv import load_dotenv
+import xml.etree.ElementTree as ET
+
+# Load environment variables. We encourage you to store your keys as environment variables.
+load_dotenv()
+
+# Extract XML Components from Keys
+def get_xml_component(xmlstring, _field):
+    try:
+        modulus_value = ET.fromstring(xmlstring).findtext(_field) or ""
+        return modulus_value
+    except Exception as e:
+        print(f"Error: {e}")
+        return ""
+      
+# Encrypt request using your Encryption Key
+def encrypt(data, encryptionKey):
+  
+  # Check if a request to be encrypted is passed.
+    try:
+        if not data:
+            raise Exception("Data sent for encryption is empty")
+            
+
+        # Extract XML Components from KeysExtract 
+        decoded_string = base64.b64decode(encryptionKey).decode('utf-8').split('!')[1]
+        modulus = get_xml_component(decoded_string, "Modulus")
+        exponent = get_xml_component(decoded_string, "Exponent")
+
+        key = RSA.construct((int.from_bytes(base64.b64decode(modulus), 'big'),
+                             int.from_bytes(base64.b64decode(exponent), 'big')))
+        
+        # Generate Cipher and encrypt requests
+        cipher = PKCS1_v1_5.new(key)
+        encrypted_bytes = base64.b64encode(cipher.encrypt(data.encode('utf-8'))).decode('utf-8')
+        print(encrypted_bytes)
+        return encrypted_bytes
+
+    except Exception as e:
+        raise e
+        
+# "-----BEGIN USAGE-----"
+
+# Example request
+requestData = {ADD_DATA_HERE}
+encryptedData = encrypt(json.dumps(requestData), os.getenv("ENCRYPTION_KEY"))
+```
+
+```C# Dotnet [expandable]
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace ArcaPg
+{
+    internal class Program
+    {
+        private static string publicXml = "";
+        private static string merchantEncKey = "";
+        private static int keySize = 0;
+        static void Main(string[] args)
+        {
+            //Console.WriteLine("Hello, World!");
+
+            merchantEncKey = "YOUR_ENCRYPTION_KEY";
+            GetKeyFromEncyptionString(merchantEncKey, out keySize, out publicXml);
+
+            var payload = {ADD_YOUR_DATA_HERE} ;
+            Console.WriteLine(Encrypt(payload));
+        }
+
+
+        /*
+         * 
+         * Encrypt Data using RSA Algorithm
+         * 
+         */
+
+        public static string Encrypt(string plaintext)
+        {
+            try
+            {
+                var data = Encoding.UTF8.GetBytes(plaintext);
+                if (data == null || data.Length < 1) throw new Exception("Data sent for encryption is empty");
+                int maxLength = GetMaximumDataLength(keySize);
+                if (data.Length > maxLength) throw new ArgumentException(string.Format("Max data length is {0}", maxLength), "data");
+                if (!IsKeySizeValid(keySize)) throw new ArgumentException("Key size is invalid", "keyzie");
+                if (string.IsNullOrEmpty(publicXml)) throw new ArgumentException("Key is either null or invalid", "publicxml");
+                using (var rsaProvider = new RSACryptoServiceProvider(keySize))
+                {
+                    rsaProvider.ImportFromPem(merchantEncKey);
+                    //rsaProvider.FromXmlString(publicXml);
+                    return Convert.ToBase64String(rsaProvider.Encrypt(data, false));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("Value cannot be null")) throw new Exception("ENCRPTNULL");
+                throw new Exception("ENCYPT001");
+            }
+        }
+
+        /*
+         * 
+         * Retrive RSA Public Key from Merchant Encryption Key
+         * 
+         */
+        public static void GetKeyFromEncyptionString(string rawkey, out int keysize, out string xmlKey)
+        {
+            keysize = 0;
+            xmlKey = "";
+            if (!string.IsNullOrEmpty(rawkey))
+            {
+                byte[] keyBytes = Convert.FromBase64String(rawkey);
+                var stringkey = Encoding.UTF8.GetString(keyBytes);
+                if (stringkey.Contains(""!))
+                {
+                    var spliitedValues = stringkey.Split(new char[] { '!' }, 2);
+
+                    try
+                    {
+                        keysize = int.Parse(spliitedValues[0]);
+                        xmlKey = spliitedValues[1];
+
+                    }
+                    catch (Exception) { }
+                }
+            }
+        }
+
+        private static int GetMaximumDataLength(int keysize)
+        {
+            return ((keysize - 384) / 8) * 37;
+        }
+        private static bool IsKeySizeValid(int keysize)
+        {
+            return keysize >= 384 && keysize <= 32768 && keysize % 8 == 0;
+        }
+    }
+}
+```
+
+</CodeGroup>

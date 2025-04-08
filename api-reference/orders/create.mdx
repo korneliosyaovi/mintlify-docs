@@ -1,0 +1,92 @@
+---
+title: 'Create Orders'
+api: 'POST /checkout/order/create'
+description: 'Create an order for the customers payment'
+---
+
+<Warning>
+This endpoint accepts only encrypted requests. Learn more about our encryption [here](/api-basics/encryption).
+</Warning>
+
+<ParamField body="data" type="string" placeholder="enter encrypted value" required>
+  The encrypted data for this request. See the unencrypted requests [here](/api-reference/api-glossary#create-order).
+</ParamField>
+
+<ResponseExample>
+
+```json 200
+{
+  "data": {
+    "order": {
+      "reference": "805551685",
+      "processorReference": "EPCLB-3134A6BDF47211EF93AB06BA2661E92B",
+      "orderPaymentReference": null,
+      "amount": 100,
+      "fee": 0,
+      "feeRate": null,
+      "statusId": 1,
+      "status": "Initiated",
+      "currency": "USD",
+      "narration": "Pay",
+      "paymentLinkId": null,
+      "recurringPaymentId": null,
+      "paymentLinkReference": null,
+      "recurringPaymentReference": null
+    },
+    "subsidiary": {
+      "id": 1,
+      "name": "Merchant Epayclub",
+      "country": "NG",
+      "supportEmail": "merchant@epayclub.com",
+      "customization": []
+    },
+    "customer": {
+      "email": "jones@gmail.com",
+      "firstName": "James",
+      "lastName": "Jones",
+      "mobile": "08101234542",
+      "country": "GB"
+    },
+    "payment": {
+      "code": null,
+      "source": null,
+      "selectedOption": null,
+      "accountNumber": null,
+      "bankProviderName": null
+    },
+    "otherPaymentOptions": [
+      {
+        "code": "C",
+        "name": "Card Payment",
+        "currency": "USD"
+      }
+    ],
+    "savedCards": [],
+    "subsidiaryOrderSummary": {
+      "orderName": "Merchant Epayclub Order 805551685",
+      "totalAmount": 100,
+      "reference": "805551685",
+      "currency": "USD",
+      "orderItems": [
+        {
+          "name": "Summary",
+          "amount": 100
+        }
+      ]
+    }
+  },
+  "status": "success",
+  "statusCode": "01",
+  "message": "Created order successfully"
+}
+```
+
+```json 400
+{
+  "status": "failed",
+  "status_code": "13",
+  "message": "Order not found at the moment"
+}
+```
+
+</ResponseExample>

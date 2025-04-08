@@ -1,0 +1,65 @@
+---
+title: 'Query Order Status'
+api: 'POST /checkout/order/status'
+description: 'Confirm the status of an existing order.'
+---
+
+<Warning>
+This endpoint accepts only encrypted requests. Learn more about our encryption [here](/api-basics/encryption).
+</Warning>
+
+<ParamField body="data" type="string" placeholder="enter encrypted value" required>
+  The encrypted data for this request. See the unencrypted requests [here](/api-reference/api-glossary#query-order-status).
+</ParamField>
+
+<ResponseExample>
+
+```json 200
+{
+  "is_final_status": true,
+  "requery_needed": false,
+  "requery_type": null,
+  "data": {
+    "payment_reference": "PARORD-E469DB31-3F33-4FD2-8365-73B9F1E08709",
+    "order_reference": "ORD120993456ffn7777890",
+    "product_id": 1,
+    "subsidiary_id": 1,
+    "wallet_id": 1,
+    "customer_id": 1,
+    "total_charged_amount": 5800,
+    "payment_status": 4,
+    "currency_id": 1,
+    "fee": 800,
+    "subsidiary_fee": null,
+    "customer_fee": null,
+    "payment_type": "1",
+    "payment_response_code": "04",
+    "payment_response_message": "Account number has expired",
+    "provider_response_date": null,
+    "date_payment_confirmed": "2021-05-09T12:05:00.413",
+    "narration": "Test Payment",
+    "remarks": "Account number has expired",
+    "parent_transaction_id": null,
+    "id": 163,
+    "created_by": 1,
+    "updated_by": -1,
+    "deleted_by": null,
+    "date_created": "2021-05-09T11:17:38.177",
+    "date_updated": "2021-05-09T16:23:12.953",
+    "date_deleted": null
+  },
+  "status": "success",
+  "status_code": "00",
+  "message": "Order Status fetched successfully"
+}
+```
+
+```json 400
+{
+  "status": "failed",
+  "status_code": "13",
+  "message": "Order not found at the moment"
+}
+```
+
+</ResponseExample>

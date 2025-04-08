@@ -1,0 +1,156 @@
+---
+title: 'API Glossary'
+description: 'Parameter definitions.'
+---
+
+This document details the pre-encryption parameters for all endpoints.
+
+## Create Order
+<ResponseField name="customer" type="Customer Object" required>
+  <Expandable title="properties">
+    <ResponseField name="firstname" type="string" required>
+      The Customer's first name.
+    </ResponseField>
+
+    <ResponseField name="lastname" type="string" required>
+      The Customer's last name.
+    </ResponseField>
+
+    <ResponseField name="mobile" type="string" required>
+      The Customer's mobile number with the ISO-3 country code.
+    </ResponseField>
+
+    <ResponseField name="country" type="string" required>
+      ISO-2 country code.
+    </ResponseField>
+
+    <ResponseField name="email" type="string">
+      The customer's email address e.g. jones@gmail.com.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="order" type="Order Object" required>
+  <Expandable title="properties">
+    <ResponseField name="amount" type="number" required>
+      The transaction amount.
+    </ResponseField>
+
+    <ResponseField name="reference" type="string" required>
+      A unique identifier to track the payment.
+    </ResponseField>
+
+    <ResponseField name="currency" type="string" required>
+      The currency code.
+    </ResponseField>
+
+    <ResponseField name="description" type="string" required>
+      The description of the payment order.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="payment" type="Payment Object">
+  <Expandable title="properties">
+    <ResponseField name="RedirectUrl" type="string">
+      Specify the redirection URL for users after payment processing.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="paymentlinkdetail" type="PaymentLink Object">
+  <Expandable title="properties">
+    <ResponseField name="paymentlinkid" type="number">
+      Add parameter definition.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+
+
+## Query Order Fee
+<ResponseField name="amount" type="string" required>
+    The transaction amount.
+</ResponseField>
+
+<ResponseField name="paymentmethod" type="string" required>
+    Expected payment method for the payment. Specify `C` for card payments.
+</ResponseField>
+
+
+## Pay Order
+### Card payments
+<ResponseField name="reference" type="string" required>
+    A unique identifier to track the payment.
+</ResponseField>
+
+<ResponseField name="paymentmethod" type="string" required>
+    Expected payment method for the payment. Specify `C` for card payments.
+</ResponseField>
+
+<ResponseField name="country" type="string" required>
+    ISO-2 country code.
+</ResponseField>
+
+<ResponseField name="card" type="Card Object" required>
+  <Expandable title="properties">
+    <ResponseField name="cardnumber" type="string" required>
+      The Customer's card number.
+    </ResponseField>
+
+    <ResponseField name="expirymonth" type="string" required>
+      2-digit number indicating the card's expiry month.
+    </ResponseField>
+
+    <ResponseField name="expiryyear" type="string" required>
+      2-digit number indicating the card's expiry year.
+    </ResponseField>
+
+    <ResponseField name="cvv" type="string" required>
+      A 3 or 4-digit security code on the card.
+    </ResponseField>
+
+    <ResponseField name="billingaddress" type="Address Object" required>
+        <Expandable title="properties">
+            <ResponseField name="street" type="string" required>
+                The primary line of your billing address, including house number and street name.
+            </ResponseField>
+
+            <ResponseField name="city" type="string" required>
+                The name of the town or city where the billing address is situated.
+            </ResponseField>
+
+            <ResponseField name="state" type="string" required>
+                The billing address' state.
+            </ResponseField>
+
+            <ResponseField name="country" type="string" required>
+                The billing address' country.
+            </ResponseField>
+
+            <ResponseField name="zipcode" type="string" required>
+                The postal code associated with the billing address.
+            </ResponseField>
+        </Expandable>
+
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+
+
+## Query Order Status
+<ResponseField name="reference" type="string" required>
+    A unique identifier to track the payment.
+</ResponseField>
+
+
+
+## Retrieve Transaction Timeline
+<ResponseField name="eventname" type="string" required>
+    Add parameter definition.
+</ResponseField>
+
+<ResponseField name="orderreference" type="string" required>
+    A unique identifier to track the payment.
+</ResponseField>
