@@ -1,0 +1,43 @@
+---
+title: 'API Headers'
+description: 'Learn about our API request headers'
+---
+
+We support two (2) types of headers for API requests:
+
+1. `Content-Type`
+2. `api-key`
+
+
+
+## Content-Type
+
+The `Content-Type` header specifies the format of your API request body. Setting it to `application/json` is essential for JSON-formatted requests, and prevents processing errors on our servers.
+
+```json Example
+curl --request POST \
+     --url 'https://path/to/example/endpoint' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+  "sample_parameter": "sample_value"
+}
+'
+```
+
+
+
+## Api-key
+
+All endpoints require authorization before you can access them. We check your request header for the `api-key` to authorize your request. We discuss authorization in more detail here.
+
+```json Example
+curl --request POST \
+     --url 'https://path/to/example/endpoint' \
+     --header 'api-key: {{YOUR_API_KEY}}' \
+     --data '
+{
+  "sample_parameter": "sample_value"
+}
+'
+```

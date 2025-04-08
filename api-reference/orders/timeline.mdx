@@ -1,0 +1,34 @@
+---
+title: 'Retrieve Transaction Timeline'
+api: 'POST /checkout/order/event/track'
+description: 'View a transaction timeline containing key actions.'
+---
+
+<Warning>
+This endpoint accepts only encrypted requests. Learn more about our encryption [here](/api-basics/encryption).
+</Warning>
+
+<ParamField body="data" type="string" placeholder="enter encrypted value" required>
+  The encrypted data for this request. See the unencrypted requests [here](/api-reference/api-glossary#retrieve-transaction-timeline).
+</ParamField>
+
+<ResponseExample>
+
+```json 200
+{
+  "data": null,
+  "status": "success",
+  "statusCode": "00",
+  "message": "Event logged successfully"
+}
+```
+
+```json 400
+{
+  "status": "failed",
+  "statusCode": "VAL400",
+  "message": "The OrderReference field is required."
+}
+```
+
+</ResponseExample>

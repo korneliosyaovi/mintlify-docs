@@ -1,0 +1,41 @@
+---
+title: 'Query Order fee'
+api: 'POST /checkout/order/fee'
+description: 'Retrieve the transaction fee for an order payment.'
+---
+
+<Warning>
+This endpoint accepts only encrypted requests. Learn more about our encryption [here](/api-basics/encryption).
+</Warning>
+
+<ParamField body="data" type="string" placeholder="enter encrypted value" required>
+  The encrypted data for this request. See the unencrypted requests [here](/api-reference/api-glossary#query-order-fee).
+</ParamField>
+
+<ResponseExample>
+
+```json 200
+{
+  "data": {
+    "fee": 6,
+    "amount": 100,
+    "subsidiaryFee": 0,
+    "customerFee": 6,
+    "totalChargedAmount": 106,
+    "paymentOption": "C"
+  },
+  "status": "success",
+  "statusCode": "00",
+  "message": "Operation successful"
+}
+```
+
+```json 400
+{
+    "status": "failed",
+    "statusCode": "VAL400",
+    "message": "payment option is required!"
+}
+```
+
+</ResponseExample>

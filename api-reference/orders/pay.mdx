@@ -1,0 +1,53 @@
+---
+title: 'Pay Order'
+api: 'POST /checkout/order/pay'
+description: 'Initiate payment for an existing order.'
+---
+
+<Warning>
+This endpoint accepts only encrypted requests. Learn more about our encryption [here](/api-basics/encryption).
+</Warning>
+
+<ParamField body="data" type="string" placeholder="enter encrypted value" required>
+  The encrypted data for this request. See the unencrypted requests [here](/api-reference/api-glossary#pay-order).
+</ParamField>
+
+<ResponseExample>
+
+```json 200
+{
+  "data": {
+    "paymentDetail": {
+      "redirectUrl": "https://core.devepayclub.com/blktk-kpay/api/v1/card/initiatetransaction?tx1=NUJHIK51459855174059672277413231740596722774&t2=fd83e64b11ed12225bf69655d40dc3b55b28dfca784bcd8c3d46af0078e8eaa2",
+      "recipientAccount": null,
+      "paymentReference": "CP370D7116-5DDA-4BDE-81E3-5155DBB0AB48"
+    },
+    "bankTransferDetails": null,
+    "orderPayment": {
+      "orderId": 29,
+      "orderPaymentReference": "PGW-PAYREF-3B315861F627474FA83852DBDD6CE71A",
+      "currency": "USD",
+      "statusId": 2,
+      "orderPaymentResponseCode": "02",
+      "orderPaymentResponseMessage": "pending-authenticaion",
+      "orderPaymentInstrument": null,
+      "remarks": "Order payment initiated",
+      "totalAmount": 106,
+      "fee": 6
+    }
+  },
+  "status": "success",
+  "statusCode": "02",
+  "message": "pending-authenticaion"
+}
+```
+
+```json 400
+{
+  "status": "failed",
+  "status_code": "13",
+  "message": "Order not found at the moment"
+}
+```
+
+</ResponseExample>
