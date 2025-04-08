@@ -12,15 +12,15 @@ Not all transactions require you to listen for webhooks, just asynchronous payme
 <Steps>
     <Step title="Access your Dashboard" icon="gear">
         Log in to your Ulipa dashboard using your email and password.
-        [Insert image here]
+        <img src="/images/ulipa-login.jpg" />
     </Step>
     <Step title="Navigate to your Webhook Settings" icon="gear">
         Select `API Keys and Webhooks` from your settings menu.
-        [Insert image here]
+        <img src="/images/ulipa-settings.jpg" />
     </Step>
     <Step title="Update your Webhook URL" icon="gear">
         Add your server's webhook endpoint to the webhook URL field.
-        [Insert image here]
+        <img src="/images/ulipa-webhook.jpg" />
     </Step>
     <Step title="Confirm your changes" icon="gear">
         Save your settings update.
@@ -36,84 +36,84 @@ When you receive a webhook, each event is a JSON object with:
 
 ```json Webhook Example [expandable]
 {
-   "data":{
-      "orderReference":"805551685",
-      "paymentReference":"EPCLB-3134A6BDF47211EF93AB06BA2661E92B",
-      "productName":"Collection",
-      "totalAmountCharged":106.0000,
-      "statusId":4,
-      "status":"Failed",
-      "paymentMethod":"Card Payment",
-      "paymentResponseCode":"12",
-      "paymentResponseMessage":"Transaction failed: Card transaction blocked due to change in the credit card details from the registered one",
-      "narration":"Pay",
-      "remarks":"Order initiated and created successfully",
-      "currencyId":6,
-      "paymentLinkId":null,
-      "paymentLinkReference":null,
-      "recurringPaymentId":null,
-      "recurringPaymentReference":null,
-      "currencyName":"USD",
-      "fee":6.0000,
-      "feeRate":6.0000,
-      "subsidiaryFee":0.0000,
-      "customerFee":6.0000,
-      "dateCreated":"2025-02-26T18:47:56",
-      "dateUpdated":"2025-02-26T19:05:35.717496",
-      "datePaymentConfirmed":null,
-      "orderPayments":[
-         {
-            "orderId":29,
-            "orderPaymentReference":"PGW-PAYREF-3B315861F627474FA83852DBDD6CE71A",
-            "paymentOptionId":2,
-            "paymentOption":"Card Payment",
-            "statusId":4,
-            "status":"Failed",
-            "responseCode":"12",
-            "responseMessage":"Transaction failed: Card transaction blocked due to change in the credit card details from the registered one",
-            "orderPaymentInstrument":null,
-            "remarks":"Order payment initiated",
-            "dateCreated":"2025-02-26T19:05:21.723112",
-            "dateUpdated":"2025-02-26T19:05:35.717595"
-         }
-      ],
-      "customer":{
-         "customerId":null,
-         "firstName":null,
-         "lastName":null,
-         "emailAddress":null,
-         "countryShortName":null,
-         "customerGroup":null,
-         "countryId":0,
-         "globalStatusId":0,
-         "globalStatus":null,
-         "mobileNumber":null,
-         "isBlacklisted":false,
-         "reasonBlacklisted":null,
-         "dateCreated":"0001-01-01T00:00:00",
-         "dateUpdated":null
-      },
-      "cardDetails":[
-         {
-            "orderPaymentId":19,
-            "status":true,
-            "country":null,
-            "cardToken":null,
-            "cardExpiryMonth":null,
-            "cardExpiryYear":null,
-            "cardType":null,
-            "cardIssuer":null,
-            "cardFirstSixDigits":null,
-            "cardLastFourDigits":null,
-            "dateCreated":"2025-02-26T19:05:35.729312",
-            "appEnvironmentId":1
-         }
-      ],
-      "paymentLink":null
-   },
-   "status":"success",
-   "statusCode":"00",
-   "message":"Order details fetched successfully"
+    "data": {
+        "orderReference": "911276742",
+        "paymentReference": "ULP-2B8B5E0B140811F093AB06BA2661E92B",
+        "productName": "Collection",
+        "totalAmountCharged": 90.1000,
+        "statusId": 5,
+        "status": "Successful",
+        "paymentMethod": "Card Payment",
+        "paymentResponseCode": "00",
+        "paymentResponseMessage": "Transaction was completed successfully",
+        "narration": "Pay",
+        "remarks": "Order initiated and created successfully",
+        "currencyId": 6,
+        "paymentLinkId": null,
+        "paymentLinkReference": null,
+        "recurringPaymentId": null,
+        "recurringPaymentReference": null,
+        "currencyName": "USD",
+        "fee": 5.1000,
+        "feeRate": 5.1000,
+        "subsidiaryFee": 0.0000,
+        "customerFee": 5.1000,
+        "dateCreated": "2025-04-07T23:29:37",
+        "dateUpdated": "2025-04-07T23:30:16.71518",
+        "datePaymentConfirmed": null,
+        "orderPayments": [
+            {
+                "orderId": 345,
+                "orderPaymentReference": "PGW-PAYREF-AC671CD06A584E5E841F4F06ECFEDDC2",
+                "paymentOptionId": 2,
+                "paymentOption": "Card Payment",
+                "statusId": 5,
+                "status": "Successful",
+                "responseCode": "00",
+                "responseMessage": "Transaction was completed successfully",
+                "orderPaymentInstrument": null,
+                "remarks": "Order payment initiated",
+                "dateCreated": "2025-04-07T23:29:38.631952",
+                "dateUpdated": "2025-04-07T23:30:16.715338"
+            }
+        ],
+        "customer": {
+            "customerId": "jones@gmail.com",
+            "firstName": "James",
+            "lastName": "Jones",
+            "emailAddress": "jones@gmail.com",
+            "countryShortName": "GB",
+            "customerGroup": "Default",
+            "countryId": 1,
+            "globalStatusId": 2,
+            "globalStatus": "Active",
+            "mobileNumber": "08101234542",
+            "isBlacklisted": false,
+            "reasonBlacklisted": null,
+            "dateCreated": "2025-02-13T02:42:39",
+            "dateUpdated": null
+        },
+        "cardDetails": [
+            {
+                "orderPaymentId": 332,
+                "status": true,
+                "country": "NG",
+                "cardToken": "TKNNTc2OTY1OTc5ODA1MDk2NDUwMTY4MTc0MzQ0MTU3119",
+                "cardExpiryMonth": "12",
+                "cardExpiryYear": "27",
+                "cardType": "MASTERCARD",
+                "cardIssuer": "MASTERCARD",
+                "cardFirstSixDigits": "555555",
+                "cardLastFourDigits": "4444",
+                "dateCreated": "2025-04-07T23:30:16.729971",
+                "appEnvironmentId": 1
+            }
+        ],
+        "paymentLink": null
+    },
+    "status": "success",
+    "statusCode": "00",
+    "message": "Order details fetched successfully"
 }
 ```
 
