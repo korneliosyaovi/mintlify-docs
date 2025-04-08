@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "Ulipa API Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#F1682B",
+    "light": "#F1682B",
+    "dark": "#F1682B"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -80,34 +80,42 @@
       "anchors": [
         {
           "anchor": "Support",
-          "href": "https://mintlify.com/docs",
+          "href": "mailto:support@ulipa.com",
           "icon": "headset"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/ulipa-logo.png",
+    "dark": "/logo/ulipa-logo.png"
+  },
+  "background": {
+    "color": {
+      "light": "#ffffff",
+      "dark": "#1E1E1E"
+    }
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@ulipa.com"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://www.google.com"
     }
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+ "api": {
+    "mdx": {
+      "server": "https://checkout-api-service.devulipa.com/",
+      "auth": {
+        "method": "key",
+        "name": "api-key"
+      }
     }
   }
 }
