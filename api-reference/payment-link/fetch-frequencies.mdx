@@ -1,0 +1,179 @@
+---
+title: 'Fetch Link frequencies'
+api: 'GET /checkout/frequencies'
+description: 'Retrieve frequency ID for recurring payments.'
+---
+
+<ResponseExample>
+```json 200
+{
+    "data": [
+        {
+            "hours": 1,
+            "days": 0,
+            "name": "Hourly",
+            "description": "Payment made hourly",
+            "isActive": null,
+            "id": 1,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 24,
+            "days": 1,
+            "name": "Daily",
+            "description": "Daily",
+            "isActive": null,
+            "id": 2,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 168,
+            "days": 7,
+            "name": "Weekly",
+            "description": "Weekly",
+            "isActive": null,
+            "id": 3,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 336,
+            "days": 14,
+            "name": "Bi-Weekly",
+            "description": "Bi-Weekly",
+            "isActive": null,
+            "id": 4,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 504,
+            "days": 21,
+            "name": "Every 3 Weeks",
+            "description": "Every 3 Weeks",
+            "isActive": null,
+            "id": 5,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 720,
+            "days": 30,
+            "name": "Monthly",
+            "description": "Monthly",
+            "isActive": null,
+            "id": 6,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 1440,
+            "days": 60,
+            "name": "Bi-Monthly",
+            "description": "Bi-Monthly",
+            "isActive": null,
+            "id": 7,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 2160,
+            "days": 90,
+            "name": "Every 3 Months",
+            "description": "Every 3 Months",
+            "isActive": null,
+            "id": 8,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 4320,
+            "days": 180,
+            "name": "Every 6 Months",
+            "description": "Every 6 Months",
+            "isActive": null,
+            "id": 9,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 8760,
+            "days": 365,
+            "name": "Yearly",
+            "description": "Yearly",
+            "isActive": null,
+            "id": 10,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        },
+        {
+            "hours": 17520,
+            "days": 730,
+            "name": "Bi-Yearly",
+            "description": "Bi-Yearly",
+            "isActive": null,
+            "id": 11,
+            "dateCreated": "2023-07-06T08:48:45",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": -1,
+            "updatedBy": null,
+            "deletedBy": null
+        }
+    ],
+    "status": "success",
+    "statusCode": "00",
+    "message": "Operation successful"
+}
+```
+
+```json 400
+{
+  "status": "failed",
+  "status_code": "13",
+  "message": "Order not found at the moment"
+}
+```
+</ResponseExample>
