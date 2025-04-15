@@ -1,0 +1,64 @@
+---
+title: 'Fetch Supported Link types'
+api: 'GET /checkout/links/types'
+description: 'Query supported payment link types.'
+---
+
+<ResponseExample>
+```json 200
+{
+  "paymentLinkTypes": [
+    {
+      "paymentLinkName": "Single Charge",
+      "description": "For single charge tokens",
+      "status": true,
+      "code": "SC",
+      "id": 1,
+      "dateCreated": "2023-07-06T08:48:45",
+      "dateUpdated": null,
+      "dateDeleted": null,
+      "createdBy": -1,
+      "updatedBy": null,
+      "deletedBy": null
+    },
+    {
+      "paymentLinkName": "Multiple Charge",
+      "description": "For subscriptions",
+      "status": true,
+      "code": "MC",
+      "id": 2,
+      "dateCreated": "2023-07-06T08:48:45",
+      "dateUpdated": null,
+      "dateDeleted": null,
+      "createdBy": -1,
+      "updatedBy": null,
+      "deletedBy": null
+    },
+    {
+      "paymentLinkName": "Subscription Payments",
+      "description": "Subscription Payments",
+      "status": true,
+      "code": "SUB",
+      "id": 5,
+      "dateCreated": "2023-07-06T08:48:45",
+      "dateUpdated": null,
+      "dateDeleted": null,
+      "createdBy": -1,
+      "updatedBy": null,
+      "deletedBy": null
+    }
+  ],
+  "status": "success",
+  "statusCode": "00",
+  "message": "Payment link types retrieved successfully"
+}
+```
+
+```json 400
+{
+  "status": "failed",
+  "status_code": "13",
+  "message": "Order not found at the moment"
+}
+```
+</ResponseExample>
