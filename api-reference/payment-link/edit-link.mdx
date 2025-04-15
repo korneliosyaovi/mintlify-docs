@@ -1,0 +1,91 @@
+---
+title: 'Edit Payment Link'
+api: 'PATCH /checkout/links/{id}/edit'
+description: 'Update the payment link information.'
+---
+
+<ParamField path="id" type="string" required>
+  The Payment link’s ID.
+</ParamField>
+
+<ParamField body="Name" type="string" required>
+  The name displayed on the payment form.
+</ParamField>
+
+<ParamField body="Description" type="string" required>
+  Additional information about the payment form.
+</ParamField>
+
+<ParamField body="PaymentType" type="string" required>
+  Specify the payment type as either`SC`, `MC` and `SUB` for single payments, multiple charge and subscriptions respectively. Learn more about supported payments for payment links [here](/api-reference/payment-link/fetch-link-type).
+</ParamField>
+
+<ParamField body="Amount" type="string">
+  The transaction amount. Leave empty to allow the customer specify the value.
+</ParamField>
+
+<ParamField body="Mobile" type="string">
+  The customer's mobile number.
+</ParamField>
+
+<ParamField body="BackgroundImage" type="string">
+  Specify the URL for the background image.
+</ParamField>
+
+<ParamField body="Website" type="string">
+  Specify the redirect URL for completed payments.
+</ParamField>
+
+<ParamField body="AuthOption" type="string">
+  Authentication method, specify `AUTH` for 3DS and `NOAUTH` for NoAuth payments.
+</ParamField>
+
+<ParamField body="Limit" type="string">
+  Add definition here.
+</ParamField>
+
+<ResponseExample>
+```json 200
+{
+    "data": {
+        "paymentLink": {
+            "id": 125,
+            "name": "Checkout TestA",
+            "paymentType": null,
+            "logo": "",
+            "amount": null,
+            "dateCreated": "2025-04-14T01:03:38.532696",
+            "reference": "cONEmanSJGVvUaGI5Vq31qtaLDt1RR7OGMMgNNcZxZgEWBZLAiW3u12",
+            "createdBy": null,
+            "creatorEmail": null,
+            "isActive": true,
+            "currency": "NGN",
+            "limit": null,
+            "paymentLinkUrl": "cONEmanSJGVvUaGI5Vq31qtaLDt1RR7OGMMgNNcZxZgEWBZLAiW3u12",
+            "appEnvironmentId": 1,
+            "paymentLinkType": "Subscription Payments",
+            "paymentLinkCode": "SUB",
+            "description": "A Demo to understand how payment links work."
+        },
+        "subsidiary": {
+            "id": 1,
+            "name": "Merchant Epayclub",
+            "country": "NG",
+            "supportEmail": "merchant@epayclub.com",
+            "customization": null
+        }
+    },
+    "status": "success",
+    "statusCode": "00",
+    "message": "Payment details fetched successfully"
+}
+```
+
+```json 400
+{
+    "status": "failed",
+    "statusCode": "VAL400",
+    "message": "The Name field is required."
+}
+```
+</ResponseExample>

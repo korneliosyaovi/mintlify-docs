@@ -1,0 +1,96 @@
+---
+title: 'Create Payment Links'
+api: 'POST /checkout/links/create'
+description: 'Generate payment links for your customer.'
+---
+
+<Tip>
+This endpoint **doesn't require** encryption.
+</Tip>
+
+<ParamField body="Name" type="string" required>
+  The name displayed on the payment form.
+</ParamField>
+
+<ParamField body="Description" type="string" required>
+  Additional information about the payment form.
+</ParamField>
+
+<ParamField body="PaymentType" type="string" required>
+  Specify the payment type as either`SC`, `MC` and `SUB` for single payments, multiple charge and subscriptions respectively. Learn more about supported payments for payment links [here](/api-reference/payment-link/fetch-link-type).
+</ParamField>
+
+<ParamField body="Currency" type="string" default="NGN" required>
+  The transaction currency. This defaults to NGN.
+</ParamField>
+
+<ParamField body="AuthOption" type="string" required>
+  Authentication method, specify `AUTH` for 3DS and `NOAUTH` for NoAuth payments.
+</ParamField>
+
+<ParamField body="Amount" type="string">
+  The transaction amount. Leave empty to allow the customer specify the value.
+</ParamField>
+
+<ParamField body="Mobile" type="string">
+  The customer's mobile number.
+</ParamField>
+
+<ParamField body="BackgroundImage" type="string">
+  Specify the URL for the background image.
+</ParamField>
+
+<ParamField body="Website" type="string">
+  Specify the redirect URL for completed payments.
+</ParamField>
+
+
+<ParamField body="Limit" type="string">
+  Add definition here.
+</ParamField>
+
+<ResponseExample>
+```json 200
+{
+    "data": {
+        "paymentLink": {
+            "id": 26,
+            "name": "HoodLine Base",
+            "paymentType": null,
+            "logo": "https://merchant-api-service.devulipa.com/subsidiary/dashboard/file/ulipa-compliance-images/download?fileId=",
+            "amount": 250.000000,
+            "dateCreated": "2025-04-15T01:08:00.785502",
+            "reference": "BQroZ3Pp6a$Qj5lJDx7XgX5gLIgz4ILL6L8KlEE8z3dv1RWKrQLZVtOfY12",
+            "createdBy": null,
+            "creatorEmail": null,
+            "isActive": true,
+            "currency": "USD",
+            "limit": 1,
+            "paymentLinkUrl": "https://payment-link-interface.devulipa.com/BQroZ3Pp6a$Qj5lJDx7XgX5gLIgz4ILL6L8KlEE8z3dv1RWKrQLZVtOfY12",
+            "appEnvironmentId": 1,
+            "paymentLinkType": "Single Charge",
+            "paymentLinkCode": "SC",
+            "description": "Music Demo"
+        },
+        "subsidiary": {
+            "id": 1,
+            "name": "Merchant Ulipa",
+            "country": "NG",
+            "supportEmail": "merchant@ulipa.com",
+            "customization": null
+        }
+    },
+    "status": "success",
+    "statusCode": "00",
+    "message": "Payment details fetched successfully"
+}
+```
+
+```json 400
+{
+    "status": "failed",
+    "statusCode": "VAL400",
+    "message": "The Name field is required."
+}
+```
+</ResponseExample>

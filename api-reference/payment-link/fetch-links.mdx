@@ -1,0 +1,120 @@
+---
+title: 'Fetch Payment Links'
+api: 'GET /checkout/links/all'
+description: 'Retrieve your payment link data.'
+---
+
+<ParamField query="id" type="number" required>
+  The Payment link's ID.
+</ParamField>
+
+<ResponseExample>
+```json 200
+[
+    {
+        "id": 1,
+        "name": "Merchant Ulipa default payment link test",
+        "paymentType": "Default",
+        "logo": null,
+        "amount": null,
+        "dateCreated": "2025-02-06T18:23:24.622791",
+        "reference": "hW7JmiN9YFJ73s3TU$O4TudiBmHKTPrd3tLL6r1mHHFjpN19UeKqm9pm0c_lKJJf12",
+        "createdBy": null,
+        "creatorEmail": null,
+        "isActive": true,
+        "currency": "NGN",
+        "limit": null,
+        "paymentLinkUrl": "https://payment-link-interface.devulipa.com/hW7JmiN9YFJ73s3TU$O4TudiBmHKTPrd3tLL6r1mHHFjpN19UeKqm9pm0c_lKJJf12",
+        "appEnvironmentId": 0,
+        "paymentLinkType": null,
+        "paymentLinkCode": null,
+        "description": null
+    },
+    {
+        "id": 5,
+        "name": "KE",
+        "paymentType": "Multiple Charge",
+        "logo": null,
+        "amount": null,
+        "dateCreated": "2025-02-09T18:53:58.211109",
+        "reference": "Zuga1iUeToLUKNi6FhEny3H6qy12",
+        "createdBy": "Merchant Ulipa",
+        "creatorEmail": "merchant@ulipa.com",
+        "isActive": true,
+        "currency": "KES",
+        "limit": null,
+        "paymentLinkUrl": "https://payment-link-interface.devulipa.com/Zuga1iUeToLUKNi6FhEny3H6qy12",
+        "appEnvironmentId": 0,
+        "paymentLinkType": null,
+        "paymentLinkCode": null,
+        "description": "Test"
+    },
+    {
+        "id": 21,
+        "name": "Jim Tom",
+        "paymentType": "Single Charge",
+        "logo": null,
+        "amount": 200.000000,
+        "dateCreated": "2025-04-11T23:11:20.977107",
+        "reference": "gAPLPSJL3yeXP4kSbcs6SJ912",
+        "createdBy": null,
+        "creatorEmail": null,
+        "isActive": true,
+        "currency": "USD",
+        "limit": 1,
+        "paymentLinkUrl": "https://payment-link-interface.devulipa.com/gAPLPSJL3yeXP4kSbcs6SJ912",
+        "appEnvironmentId": 0,
+        "paymentLinkType": null,
+        "paymentLinkCode": null,
+        "description": "Something Special"
+    },
+    {
+        "id": 25,
+        "name": "Include Inc",
+        "paymentType": "Multiple Charge",
+        "logo": null,
+        "amount": 1000.000000,
+        "dateCreated": "2025-04-15T01:03:05.707482",
+        "reference": "xAPvS6PX4y7wtCwWFlfRVPCp4Tb16x21MQpM81gXO12",
+        "createdBy": null,
+        "creatorEmail": null,
+        "isActive": true,
+        "currency": "USD",
+        "limit": 100,
+        "paymentLinkUrl": "https://payment-link-interface.devulipa.com/xAPvS6PX4y7wtCwWFlfRVPCp4Tb16x21MQpM81gXO12",
+        "appEnvironmentId": 0,
+        "paymentLinkType": null,
+        "paymentLinkCode": null,
+        "description": "Luxury services for Logical Operators"
+    },
+    {
+        "id": 26,
+        "name": "HoodLine Base",
+        "paymentType": "Single Charge",
+        "logo": null,
+        "amount": 250.000000,
+        "dateCreated": "2025-04-15T01:08:00.785502",
+        "reference": "BQroZ3Pp6a$Qj5lJDx7XgX5gLIgz4ILL6L8KlEE8z3dv1RWKrQLZVtOfY12",
+        "createdBy": null,
+        "creatorEmail": null,
+        "isActive": true,
+        "currency": "USD",
+        "limit": 1,
+        "paymentLinkUrl": "https://payment-link-interface.devulipa.com/BQroZ3Pp6a$Qj5lJDx7XgX5gLIgz4ILL6L8KlEE8z3dv1RWKrQLZVtOfY12",
+        "appEnvironmentId": 0,
+        "paymentLinkType": null,
+        "paymentLinkCode": null,
+        "description": "Music Demo"
+    }
+]
+```
+
+```json 400
+{
+  "status": "failed",
+  "status_code": "13",
+  "message": "Order not found at the moment"
+}
+```
+
+</ResponseExample>

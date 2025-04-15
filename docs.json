@@ -39,7 +39,8 @@
           {
             "group": "Payments",
             "pages": [
-              "payments/cards"
+              "payments/cards",
+              "payments/payment-link"
             ]
           }
         ]
@@ -71,6 +72,18 @@
             "group": "Payment Operations",
             "pages": [
               "api-reference/payment-operations/bank-codes"
+            ]
+          },
+          {
+            "group": "Payment Links",
+            "pages": [
+              "api-reference/payment-link/create-link",
+              "api-reference/payment-link/fetch-links",
+              "api-reference/payment-link/fetch-link-type",
+              "api-reference/payment-link/edit-link",
+              "api-reference/payment-link/activate-link",
+              "api-reference/payment-link/deactivate-link",
+              "api-reference/payment-link/cancel-recurring-payments"
             ]
           }
         ]
