@@ -36,9 +36,9 @@ To create a payment link for a one-time payment, send your request to the create
 | Mobile                    | The customer’s mobile number.                                                                         | +4412345678        | No       |
 | BackgroundImage           | Specify the URL for the background image.                                                             | https://image.com  | No       |
 | Website                   | Specify the redirect URL for completed payments.                                                      | https://example.com| No       |
-| Currency                  | The transaction currency. This defaults to NGN.                                                       | GBP                | No       |
+| Currency                  | The transaction currency. This defaults to NGN.                                                       | GBP                | Yes       |
 | AuthOption                | Authentication method, specify `AUTH` for 3DS and `NOAUTH` for NoAuth payments.                       | `AUTH`             | No       |
-| Limit                     | Add definition here.                                                                                  | 100                | No       |
+| Limit                     | The number of subscribers that can use this payment link.                                                                                  | 100                | No       |
 
 Once your link is created, you can perform the following actions to manage it:
 1. [Edit your payment link](/api-reference/payment-link/edit-link)
