@@ -1,0 +1,32 @@
+---
+title: 'Activate Payment link'
+api: 'PATCH /checkout/links/{id}/status/activate'
+description: 'Activate an inactive payment link.'
+---
+
+<Warning>
+Use this endpoint with only **inactive** payment links.
+</Warning>
+
+<ParamField path="id" type="string" required>
+  The Payment link’s ID.
+</ParamField>
+
+<ResponseExample>
+```json 200
+{
+    "data": null,
+    "status": "success",
+    "statusCode": "00",
+    "message": "Payment link status updated successfully"
+}
+```
+
+```json 400
+{
+    "status": "failed",
+    "statusCode": "02",
+    "message": "payment link not found"
+}
+```
+</ResponseExample>

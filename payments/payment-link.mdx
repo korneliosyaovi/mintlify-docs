@@ -1,0 +1,47 @@
+---
+title: 'Payment Link'
+description: 'Seamlessly collect payments using our checkout interface.'
+icon: 'link-simple'
+---
+
+Customers expect payments to be quick, easy, and secure. If your checkout process feels slow or confusing, there’s a good chance they won’t complete it. That’s where our Payment Link APIs come in—they make it easy to get paid, whether you’re building your own flow or just need a simple way to send a link.
+
+<img src="/images/checkout-ulipa.png" />
+
+Payment links are ready to go in seconds. They collect customer details, start the payment process, and can be shared almost anywhere—from your website to social media, or even in an email or invoice. They are simple to create, easy to manage, and flexible enough to fit a variety of use cases.
+
+In this guide, we’ll show you how to use payment links to start collecting payments quickly and with less hassle—so you can focus on what really matters: growing your business.
+
+## Understanding Payment Links
+When a customer clicks a payment link, a brief form will appear, prompting them to enter information such as their name, email address, payment amount, and currency. After their details are validated, they will be redirected to the checkout page to finalize the payment.
+
+These payment links can facilitate single transactions or be configured for recurring payments. Recurring payments can either continue indefinitely until cancellation or occur at regular intervals for a specified number of cycles, depending on your requirements.
+
+## Creating a Payment link
+To start accepting payments using payment links, you first need to create one. You can create links for single charge, multiple charges and subscription payments. Let’s review some use cases for the supported kinds of payment before we discuss how to create the link.
+
+In the case of a single charge, the customer makes a one-time payment. This applies to most checkout payments for online businesses where the customer checkouts to complete their order. For multiple charges, the customer makes a regular payment for a fixed period of time e.g the customer is making a monthly payment for five (5) months, this payment differs from subscriptions because of the finite number of payments to be made. 
+
+In the case of subscriptions, the customer makes regular payments for an indefinite period until the subscription is cancelled.
+
+### Single Payments
+To create a payment link for a one-time payment, send your request to the create payment link [endpoint](/api-reference/payment-link/create-link). This request needs to contain the following:
+
+| Parameter                 | Definition                                                                                            | Example            | Required |
+| :------------------------ | :---------------------------------------------------------------------------------------------------- | :----------------- | :------- |
+| Name                      | The name displayed on the payment form.                                                               | My Demo link       | Yes      |
+| Description               | Additional information about the payment form.                                                        | Sample checkout    | Yes      |
+| PaymentType               | Specify the payment type as either`SC`, `MC` and `SUB` for single payments, multiple charge and subscriptions respectively. | `SUB`  | Yes      |
+| Amount                    | The transaction amount. Leave empty to allow the customer specify the value.                          | 100                | No       |
+| Mobile                    | The customer’s mobile number.                                                                         | +4412345678        | No       |
+| BackgroundImage           | Specify the URL for the background image.                                                             | https://image.com  | No       |
+| Website                   | Specify the redirect URL for completed payments.                                                      | https://example.com| No       |
+| Currency                  | The transaction currency. This defaults to NGN.                                                       | GBP                | No       |
+| AuthOption                | Authentication method, specify `AUTH` for 3DS and `NOAUTH` for NoAuth payments.                       | `AUTH`             | No       |
+| Limit                     | Add definition here.                                                                                  | 100                | No       |
+
+Once your link is created, you can perform the following actions to manage it:
+1. [Edit your payment link](/api-reference/payment-link/edit-link)
+2. [Deactivate your link](/api-reference/payment-link/deactivate-link)
+3. [Activate your link](/api-reference/payment-link/activate-link)
+4. [Retrieve link information](/api-reference/payment-link/fetch-links)
