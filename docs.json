@@ -83,7 +83,8 @@
               "api-reference/payment-link/edit-link",
               "api-reference/payment-link/activate-link",
               "api-reference/payment-link/deactivate-link",
-              "api-reference/payment-link/cancel-recurring-payments"
+              "api-reference/payment-link/cancel-recurring-payments",
+              "api-reference/payment-link/fetch-frequencies"
             ]
           }
         ]
